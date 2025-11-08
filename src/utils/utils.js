@@ -1,8 +1,26 @@
 const axios  = require("axios");
+const platformFilterMapper = {
+        'Leetcode' : "leetcode.com",
+        'Codechef' : "codechef.com",
+        'Codeforces' : "codeforces.com",
+        'AtCoder' : "atcoder.jp",
+}
+
+function filteredContest(contestList,platformFilter){
+    const hostName = platformFilterMapper[platformFilter];
+    const arrList = Array.from(contestList.objects);
+
+    const filteredArr = arrList.filter((item)=>{
+        return item.host === hostName;
+    })
+
+    // console.log(filteredArr);
+    return filteredArr;
+}
 
 function formatList(contestList){
     const arr = [];
-    const objectsArr = contestList.objects;
+    const objectsArr = contestList.objects === undefined ? contestList : contestList.objects;
 
     for(const obj of objectsArr){
         // console.log(obj);
@@ -23,7 +41,9 @@ function formatList(contestList){
 async function getTodayContest() {
     try {
         const now = new Date();
-        const currDateStartTime = now.toISOString();
+        const offsetMinutes = now.getTimezoneOffset();
+        const localeTime = new Date(now.getTime() - offsetMinutes*60*1000);
+        const currDateStartTime = localeTime.toISOString();
         const currDateEndTime = currDateStartTime.substring(0,11) + "23:59:59.000Z";
 
         const response = await axios.get("https://clist.by/api/v4/contest/",{
@@ -38,8 +58,7 @@ async function getTodayContest() {
             }
         });
         const contestList = response.data;
-        const result = formatList(contestList);
-        return result;
+        return contestList;
 
     } catch (error) {
         console.log(error);
@@ -47,5 +66,7 @@ async function getTodayContest() {
 }
 
 module.exports = {
-    getTodayContest 
+    getTodayContest ,
+    formatList ,
+    filteredContest
 }
