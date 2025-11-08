@@ -1,0 +1,16 @@
+{
+  "name": "contestping",
+  "version": "1.0.0",
+  "description": "Reminders before the contest kicks off.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kishan Singh",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "telegraf": "^4.16.3"
+  }
+}
