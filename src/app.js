@@ -7,9 +7,15 @@ require("dotenv").config();
 const bot = new Bot(process.env.BOT_TOKEN);
 
 
-bot.command("start",(ctx) => {
-  ctx.reply(`Hi ${ctx.from.first_name}. Welcome to ContestPing!`);
-  ctx.reply(`Where we dont let you miss any coding contest...`);
+bot.command("start",async (ctx) => {
+  await ctx.reply(`Hi ${ctx.from.first_name}👋. Welcome to ContestPing!`);
+  await ctx.reply(`Where we dont let you miss any coding contest...`);
+  ctx.reply(`List of the commands that you can enter here:
+        1) /start -> Start the bot
+        2) /help -> help you to navigate
+        3) /list_contest -> List down all the today contest
+        4) /select_platform -> Select the plaform and it will show you all the contest that is happening on it today.
+        `)
 });
 
 
@@ -132,9 +138,9 @@ bot.command("help",(ctx)=>{
 
 bot.api.setMyCommands([
   { command: "start", description: "Start the bot" },
-  { command: "help", description: "List all the command" },
+  { command: "help", description: "help you to navigate" },
   { command: "list_contest", description: "List down all the today contest" },
-  {command: "select_platform", description: "Select the plaform and it will show the all the contest that is happening on it today."}
+  {command: "select_platform", description: "Select the plaform and it will show you all the contest that is happening on it today."}
 ])
 
 
@@ -146,6 +152,15 @@ bot.command("select_platform",async (ctx)=>{
   })
 })
 
+bot.on(":text",(ctx)=>{
+    ctx.reply(`It looks like you have enter something wrongs☹️
+        List of the commands that you can enter here:
+        1) /start -> Start the bot
+        2) /help -> help you to navigate
+        3) /list_contest -> List down all the today contest
+        4) /select_platform -> Select the plaform and it will show you all the contest that is happening on it today.
+        `)
+})
 
 bot.start();
 
