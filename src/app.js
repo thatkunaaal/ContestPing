@@ -37,7 +37,10 @@ bot.command("list_contest", async (ctx) => {
   }
 
   const outputStr = outputArr.join("");
-  ctx.reply(`Today's contest: ${outputStr}`);
+  if(outputStr.length === 0)
+    ctx.reply(`No upcoming contest to display.`);
+  else
+    ctx.reply(`Today's contest: ${outputStr}`);
 });
 
 const menu = new Menu('my-menu-identifier')

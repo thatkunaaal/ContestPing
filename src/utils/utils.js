@@ -57,6 +57,7 @@ async function getTodayContest() {
                 total_count : 'true'
             }
         });
+        console.log(response.data);
         const contestList = response.data;
         return contestList;
 
